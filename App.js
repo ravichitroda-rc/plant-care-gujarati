@@ -29,10 +29,10 @@ function useLoadFonts(fontMap) {
   return loaded;
 }
 
-const fontsMap = {
-  "NotoSerifGujarati": require("./assets/fonts/NotoSerifGujarati-Regular.ttf"),
-  "NotoSansGujarati": require("./assets/fonts/NotoSansGujarati-Regular.ttf"),
-};
+// NOTE: For quick testing in Expo Go without committing font binaries, you can set fontsMap = {}
+// to skip loading custom fonts. Replace with the require(...) map when you add the TTF files to
+// assets/fonts/.
+const fontsMap = {};
 
 function Icon({ name, size = 20, color = "black" }) {
   const stroke = { stroke: color, strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", fill: "none" };
@@ -224,7 +224,7 @@ function IdentifyTab({ onResult }) {
   return (
     <View style={{ padding: 18 }}>
       <Text style={styles.sectionTitle}>ફોટો પરથી છોડ ઓળખો</Text>
-      <Text style={styles.sectionDesc}>તમારા છોડનો સ્પષ્ટ ફોટો અપલોડ કરો — પાંદડાં અને દાંડી સારી રીતે દેખાવા જોઈએ.</Text>
+      <Text style={styles.sectionDesc}>તમારા છોડનો સ્પષ્ટ ફોટો અપલોડ કરો — પાંદડાં અને દાંડી સારી રીતે દેખાતા હોવા જોઈએ.</Text>
 
       {!image ? (
         <View style={{ marginTop: 12 }}>
@@ -290,8 +290,8 @@ export default function App() {
         <Text style={styles.headerSubtitle}>પાણી, ભેજ, તાપમાન, ખાતર અને પ્રકાશ — બધું એક જ જગ્યા</Text>
 
         <View style={styles.tabWrap}>
-          <TouchableOpacity onPress={() => setTab("browse")} style={[styles.tabButton, tab === "browse" && styles.tabActive]}><Text style={tab === "browse" ? styles.tabTextActive : styles.tabText}>યાદી જુઓ</Text></TouchableOpacity>
-          <TouchableOpacity onPress={() => setTab("identify")} style={[styles.tabButton, tab === "identify" && styles.tabActive]}><Text style={tab === "identify" ? styles.tabTextActive : styles.tabText}>ફોટોથી ઓળખો</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => setTab("browse")} style={[styles.tabButton, tab === "browse" && styles.tabActive]}><Text style={tab === "browse" ? styles.tabTextActive : styles.tabText}>બ્રાઉઝ</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => setTab("identify")} style={[styles.tabButton, tab === "identify" && styles.tabActive]}><Text style={tab === "identify" ? styles.tabTextActive : styles.tabText}>ઓળખો</Text></TouchableOpacity>
         </View>
       </View>
 
@@ -304,7 +304,7 @@ export default function App() {
             </View>
 
             {filtered.length === 0 ? (
-              <View style={{ padding: 40 }}><Text style={{ color: "#9CA491" }}>કોઈ છોડ મળ્યો નહીં.</Text></View>
+              <View style={{ padding: 40 }}><Text style={{ color: "#9CA491" }}>કોઈ છોડ મળ્યો નથી.</Text></View>
             ) : (
               <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                 {filtered.map((p) => (
@@ -318,7 +318,7 @@ export default function App() {
         </ScrollView>
       )}
 
-      {tab === "identify" && <IdentifyTab onResult={(pl) => { setSelected(pl); setNotice("ફોટા પરથી ઓળખાયેલો છોડ — વિગતો AI દ્વારા બનાવેલી છે, ચકાસીને ઉપયોગ કરો."); setTab("browse"); }} />}
+      {tab === "identify" && <IdentifyTab onResult={(pl) => { setSelected(pl); setNotice("ફોટા પરથી ઓળખાયેલો છોડ — વિગતો AI દ્વારા પ્રદાન કરવામાં આવી છે."); }} />}
 
       <PlantDetailModal visible={!!selected} plant={selected} onClose={() => setSelected(null)} notice={notice} />
     </SafeAreaView>
